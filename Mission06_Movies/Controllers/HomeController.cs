@@ -12,10 +12,11 @@ namespace Mission06_Movies.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private MovieEntryContext movieContext { get; set; }
+        public HomeController(ILogger<HomeController> logger, MovieEntryContext context)
         {
             _logger = logger;
+            movieContext = context;
         }
 
         public IActionResult Index()
@@ -34,6 +35,8 @@ namespace Mission06_Movies.Controllers
         {
             if (ModelState.IsValid)
             {
+                movieContext.Add(mfr);
+                movieContext.SaveChanges();
                 return View("ConfirmationPage", mfr);
                     
             }

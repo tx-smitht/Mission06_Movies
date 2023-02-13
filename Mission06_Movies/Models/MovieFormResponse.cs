@@ -8,6 +8,9 @@ namespace Mission06_Movies.Models
 {
     public class MovieFormResponse
     {
+        [Key]
+        [Required]
+        public int MovieID { get; set; }
         [Required]
         public string Category { get; set; }
 

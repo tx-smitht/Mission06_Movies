@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Mission06_Movies
 {
@@ -25,6 +26,12 @@ namespace Mission06_Movies
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<MovieEntryContext>(options =>
+            {
+                // use sqlite and tell it where it is. Go to the appsettings.json,
+                // then the connectionstrings part of the json
+                options.UseSqlite(Configuration["ConnectionStrings:MovieConnection"]);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
