@@ -23,6 +23,31 @@ namespace Mission06_Movies.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult MovieForm()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult MovieForm(MovieFormResponse mfr)
+        {
+            if (ModelState.IsValid)
+            {
+                return View("ConfirmationPage", mfr);
+                    
+            }
+            else
+            {
+                return View(mfr);
+            }
+            
+        }
+
+        public IActionResult Podcasts()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();

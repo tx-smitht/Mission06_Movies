@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using Mission06_Movies.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
