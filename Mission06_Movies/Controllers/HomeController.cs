@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Mission06_Movies.Models;
 using System;
@@ -25,8 +26,22 @@ namespace Mission06_Movies.Controllers
         }
 
         [HttpGet]
+        public IActionResult ShowMovies()
+        {
+            var applications = movieContext.Movies
+                .Include(x => x.Category)
+                .OrderBy(x => x.Title)
+                .ToList();
+
+            ViewBag.Categories = movieContext.Categories.ToList();
+
+            return View(applications);
+        }
+
+        [HttpGet]
         public IActionResult MovieForm()
         {
+            ViewBag.Categories = movieContext.Categories.ToList();
             return View();
         }
 
@@ -37,7 +52,7 @@ namespace Mission06_Movies.Controllers
             {
                 movieContext.Add(mfr);
                 movieContext.SaveChanges();
-                return View("ConfirmationPage", mfr);
+                return RedirectToAction("ShowMovies");
                     
             }
             else
@@ -46,6 +61,27 @@ namespace Mission06_Movies.Controllers
             }
             
         }
+
+
+        ////////// Delete Operations //////////
+        
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var movie = movieContext.Movies.Single(x => x.MovieID == id);
+
+            return View(movie);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(MovieFormResponse mfr)
+        {
+            movieContext.Movies.Remove(mfr);
+            movieContext.SaveChanges();
+            return RedirectToAction("ShowMovies");
+        }
+
+
 
         public IActionResult Podcasts()
         {
