@@ -38,11 +38,15 @@ namespace Mission06_Movies.Controllers
             return View(applications);
         }
 
+
+        ///////// Add Operations ///////////
+
         [HttpGet]
         public IActionResult MovieForm()
         {
             ViewBag.Categories = movieContext.Categories.ToList();
-            return View();
+            return View("movieform",new MovieFormResponse()); // We generate a new object so that it has an id already. For sharing the add and edit page
+             
         }
 
         [HttpPost]
@@ -62,9 +66,44 @@ namespace Mission06_Movies.Controllers
             
         }
 
+        //////// Edit Operations ////////
+        
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            ViewBag.Categories = movieContext.Categories.ToList();
+
+            // From the db context, from the responses table, get a single record where it matches the id (passed in url)
+            var movie = movieContext.Movies
+                .Single(x => x.MovieID == id);
+
+            // Renders the MovieForm page, but since we have the asp-for tag helpers, it
+            // populates everything for us! It's awesome!!
+            return View("MovieForm", movie);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(MovieFormResponse mfr)
+        {
+            if (ModelState.IsValid)
+            {
+                movieContext.Update(mfr);
+                movieContext.SaveChanges();
+                return RedirectToAction("ShowMovies");
+            }
+            else
+            {
+                // If it is missing things, it will return the application page with
+                // the error messages
+                return View("DatingApplication");
+            }
+
+        }
+        
+
 
         ////////// Delete Operations //////////
-        
+
         [HttpGet]
         public IActionResult Delete(int id)
         {

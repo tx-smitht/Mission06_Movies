@@ -48,6 +48,9 @@
 
             <label asp-for="Notes">Notes</label>
             <input asp-for="Notes" maxlength="25" /><br />
+           
+            @* Hidden tag so that we can share the edit and the add page. *@
+            <input type="hidden" asp-for="MovieID" />
 
             <button type="submit">Submit</button>
 
