@@ -16,15 +16,50 @@ namespace Mission06_Movies.Models
 
         public DbSet<MovieFormResponse> Movies { get; set; }
 
+        public DbSet<Category> Categories { get; set; }
+
         // Seeding the data
         protected override void OnModelCreating(ModelBuilder mb)
         {
+            mb.Entity<Category>().HasData(
+                new Category
+                {
+                    CategoryId = 1,
+                    CategoryName = "Action"
+                },
+                new Category
+                {
+                    CategoryId = 2,
+                    CategoryName = "Adventure"
+                },
+                new Category
+                {
+                    CategoryId = 3,
+                    CategoryName = "Comedy"
+                },
+                new Category
+                {
+                    CategoryId = 4,
+                    CategoryName = "Thriller"
+                },
+                new Category
+                {
+                    CategoryId = 5,
+                    CategoryName = "Horror"
+                },
+                new Category
+                {
+                    CategoryId = 6,
+                    CategoryName = "Documentary"
+                }
+
+                );
             mb.Entity<MovieFormResponse>().HasData(
 
                 new MovieFormResponse
                 {
                     MovieID = 1,
-                    Category = "Comedy",
+                    CategoryId = 3,
                     Title = "School of Rock",
                     Year = 2003,
                     Director = "Richard Linklater",
@@ -36,7 +71,7 @@ namespace Mission06_Movies.Models
                 new MovieFormResponse
                 {
                     MovieID = 2,
-                    Category = "Action/Adventure",
+                    CategoryId = 2,
                     Title = "Avatar, Way of Water",
                     Year = 2023,
                     Director = "James Cameron",
@@ -48,7 +83,7 @@ namespace Mission06_Movies.Models
                 new MovieFormResponse
                 {
                     MovieID = 3,
-                    Category = "Thriller/Action",
+                    CategoryId = 4,
                     Title = "The Prestige",
                     Year = 2006,
                     Director = "Christopher Nolan",
